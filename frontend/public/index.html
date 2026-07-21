@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIP-SWP Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <!-- jsPDF (+ autotable) for the downloadable plan -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-row">
+        <div>
+          <h1>SIP-SWP Planner</h1>
+          <p class="subtitle">
+            Plan your wealth accumulation (SIP) and withdrawal (SWP) — with
+            inflation, lifestyle inflation, and step-up modelled month-by-month.
+          </p>
+        </div>
+        <button id="download-pdf" class="download-btn" type="button">
+          ⬇ Download Plan (PDF)
+        </button>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="sip" role="tab">
+        SIP · Accumulation
+      </button>
+      <button class="tab-btn" data-tab="swp" role="tab">
+        SWP · Withdrawal
+      </button>
+    </nav>
+
+    <!-- ================================================================= -->
+    <!-- SIP PANEL                                                         -->
+    <!-- ================================================================= -->
+    <section id="panel-sip" class="panel active">
+      <div class="layout">
+        <!-- Controls -->
+        <div class="controls card">
+          <h2>SIP Inputs</h2>
+          <div id="sip-inputs"></div>
+        </div>
+
+        <!-- Results -->
+        <div class="results">
+          <div class="summary-grid" id="sip-summary"></div>
+
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Invested vs. nominal corpus (before inflation)</h3>
+              <div class="chart-toggle">
+                <label>
+                  <input type="checkbox" id="sip-monthly-toggle" />
+                  Show by month
+                </label>
+              </div>
+            </div>
+            <div class="callout" id="sip-nominal-callout"></div>
+            <div class="chart-wrap">
+              <canvas id="sip-chart-nominal"></canvas>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Invested vs. actual corpus (after both inflations)</h3>
+            </div>
+            <div class="callout" id="sip-real-callout"></div>
+            <div class="chart-wrap">
+              <canvas id="sip-chart-real"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- SWP PANEL                                                         -->
+    <!-- ================================================================= -->
+    <section id="panel-swp" class="panel">
+      <div class="layout">
+        <!-- Controls -->
+        <div class="controls card">
+          <h2>SWP Inputs</h2>
+
+          <!-- Corpus source selector -->
+          <div class="field corpus-source">
+            <label class="field-label">Starting Corpus source</label>
+            <div class="radio-row">
+              <label>
+                <input type="radio" name="corpus-source" value="sip" checked />
+                Use SIP final value
+              </label>
+              <label>
+                <input type="radio" name="corpus-source" value="manual" />
+                Enter manually
+              </label>
+            </div>
+            <div class="link-badge" id="corpus-link-badge"></div>
+          </div>
+
+          <div id="swp-inputs"></div>
+        </div>
+
+        <!-- Results -->
+        <div class="results">
+          <div class="summary-grid" id="swp-summary"></div>
+
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Corpus depletion over time</h3>
+              <div class="chart-toggle">
+                <label>
+                  <input type="checkbox" id="swp-monthly-toggle" />
+                  Show by month
+                </label>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="swp-chart-main"></canvas>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="chart-head">
+              <h3>Principal vs. Redeemed vs. Remaining (per year)</h3>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="swp-chart-bars"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download scope chooser -->
+    <div id="download-modal" class="modal-overlay" hidden>
+      <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dl-title"
+      >
+        <h3 id="dl-title">Download plan (PDF)</h3>
+        <p class="modal-sub">Choose what to include in the PDF.</p>
+        <div class="modal-options">
+          <button class="modal-opt" type="button" data-scope="sip">
+            <span class="modal-opt-title">SIP only</span>
+            <span class="modal-opt-desc">Accumulation inputs, results &amp; charts</span>
+          </button>
+          <button class="modal-opt" type="button" data-scope="swp">
+            <span class="modal-opt-title">SWP only</span>
+            <span class="modal-opt-desc">Withdrawal inputs, results &amp; charts</span>
+          </button>
+          <button class="modal-opt" type="button" data-scope="both">
+            <span class="modal-opt-title">Both (SIP + SWP)</span>
+            <span class="modal-opt-desc">The complete wealth plan</span>
+          </button>
+        </div>
+        <button class="modal-cancel" type="button" id="dl-cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

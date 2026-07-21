@@ -1,0 +1,463 @@
+/* ---------------------------------------------------------------------------
+   SIP-SWP Planner — styles
+   Light-first, responsive, works on desktop and mobile widths.
+--------------------------------------------------------------------------- */
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --ink: #1a2233;
+  --ink-soft: #5a6478;
+  --line: #e3e8f0;
+  --brand: #2f6df6;
+  --brand-soft: #eaf1ff;
+  --green: #16a34a;
+  --amber: #d97706;
+  --red: #dc2626;
+  --shadow: 0 1px 3px rgba(20, 30, 60, 0.08), 0 8px 24px rgba(20, 30, 60, 0.06);
+  --radius: 14px;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial,
+    sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.app-header {
+  padding: 28px 24px 12px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.app-header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: -0.02em;
+}
+.download-btn {
+  flex-shrink: 0;
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.15s ease, transform 0.05s ease;
+  white-space: nowrap;
+}
+.download-btn:hover {
+  background: #2258d0;
+}
+.download-btn:active {
+  transform: translateY(1px);
+}
+.download-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.subtitle {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  max-width: 720px;
+}
+
+/* Tabs ---------------------------------------------------------------- */
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 24px;
+  max-width: 1240px;
+  margin: 12px auto 0;
+}
+.tab-btn {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  padding: 10px 20px;
+  border-radius: 10px 10px 0 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tab-btn.active {
+  color: var(--brand);
+  border-color: var(--brand);
+  border-bottom-color: var(--card);
+  background: var(--card);
+}
+
+/* Panels -------------------------------------------------------------- */
+.panel {
+  display: none;
+  padding: 16px 24px 60px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.panel.active {
+  display: block;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+.controls {
+  position: sticky;
+  top: 12px;
+}
+@media (max-width: 900px) {
+  .controls {
+    position: static;
+  }
+}
+.controls h2 {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+}
+
+/* Slider + number field component ------------------------------------- */
+.field {
+  margin-bottom: 18px;
+}
+.field-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.field-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.field-hint {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.num-input {
+  width: 130px;
+  text-align: right;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: #fbfcfe;
+}
+.num-input:focus {
+  outline: 2px solid var(--brand-soft);
+  border-color: var(--brand);
+}
+.num-input.invalid {
+  border-color: var(--red);
+  background: #fff5f5;
+}
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+.field.locked {
+  opacity: 0.7;
+}
+.field.locked input[type="range"] {
+  cursor: not-allowed;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: help;
+  margin-left: 6px;
+}
+
+/* Corpus source selector --------------------------------------------- */
+.corpus-source {
+  padding: 14px;
+  background: var(--brand-soft);
+  border-radius: 10px;
+}
+.radio-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+.link-badge {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--brand);
+  font-weight: 600;
+}
+.link-badge.unlinked {
+  color: var(--ink-soft);
+}
+
+/* Summary cards ------------------------------------------------------- */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.summary-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+.summary-card .label {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.summary-card .value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.summary-card .value.green {
+  color: var(--green);
+}
+.summary-card .value.amber {
+  color: var(--amber);
+}
+.summary-card .value.red {
+  color: var(--red);
+}
+.summary-card .sub {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* Charts -------------------------------------------------------------- */
+.chart-card {
+  margin-bottom: 20px;
+}
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.chart-head h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+.chart-toggle {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.chart-wrap {
+  position: relative;
+  height: 340px;
+}
+.callout {
+  background: var(--brand-soft);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Hover tooltips for technical terms ---------------------------------- */
+/* Any element with a data-tip attribute shows a small plain-language
+   explanation on hover / focus. Deploy-friendly: pure CSS, no JS, no exposed
+   formulas. Add class .term as well to also get a dotted underline hint. */
+[data-tip] {
+  cursor: help;
+  position: relative;
+}
+.term {
+  border-bottom: 1px dotted currentColor;
+}
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  z-index: 60;
+  width: max-content;
+  max-width: 240px;
+  background: #1a2233;
+  color: #fff;
+  padding: 8px 11px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+  box-shadow: 0 6px 20px rgba(20, 30, 60, 0.22);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+}
+[data-tip]:hover::after,
+[data-tip]:focus::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+/* Right-aligned terms open their tooltip toward the left edge. */
+[data-tip].tip-left::after {
+  left: auto;
+  right: 0;
+}
+
+/* Download modal ------------------------------------------------------ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 60, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+.modal-overlay[hidden] {
+  display: none;
+}
+.modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(20, 30, 60, 0.28);
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+}
+.modal h3 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+}
+.modal-sub {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+.modal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-opt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  border: 1px solid var(--line);
+  background: #fbfcfe;
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.modal-opt:hover,
+.modal-opt:focus {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  outline: none;
+}
+.modal-opt-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.modal-opt-desc {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.modal-cancel {
+  margin-top: 16px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.modal-cancel:hover {
+  background: #f2f4f9;
+}
+
+/* Toast --------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--red);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 100;
+  max-width: 90vw;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
