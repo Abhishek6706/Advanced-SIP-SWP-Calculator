@@ -1,0 +1,12 @@
+# Local development / testing dependencies.
+#   pip install -r requirements.txt -r requirements-dev.txt
+-r requirements.txt
+
+# Local ASGI server (not needed on Vercel).
+uvicorn[standard]==0.30.1
+
+# Testing
+pytest==8.2.2
+
+# HTTP client (FastAPI TestClient / async requests)
+httpx==0.27.0
