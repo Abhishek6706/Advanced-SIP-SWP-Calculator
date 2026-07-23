@@ -2,3 +2,13 @@
 name = "fastapi-app"
 version = "0.1.0"
 requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.111.0",
+    "pydantic==2.7.4",
+]
+
+# Tells Vercel's Python runtime which ASGI app to serve. Vercel bundles the
+# whole project, so the `backend` package (and the static frontend it mounts)
+# are available to the function.
+[tool.vercel]
+entrypoint = "backend.main:app"
