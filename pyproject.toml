@@ -7,8 +7,8 @@ dependencies = [
     "pydantic==2.7.4",
 ]
 
-# Tells Vercel's Python runtime which ASGI app to serve. Vercel bundles the
-# whole project, so the `backend` package (and the static frontend it mounts)
-# are available to the function.
+# Tells Vercel's Python runtime which ASGI app to serve. The whole `backend`
+# package is bundled into the function; the static frontend in public/ is served
+# separately by Vercel's CDN.
 [tool.vercel]
 entrypoint = "backend.main:app"

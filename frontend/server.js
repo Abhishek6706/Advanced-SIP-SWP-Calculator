@@ -22,7 +22,9 @@ const PORT = process.env.PORT || 3000;
 const FASTAPI_URL = process.env.FASTAPI_URL || "http://127.0.0.1:8000";
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+// Static SPA now lives in the repo-root public/ directory (served by Vercel's
+// CDN in production; served here for local `node server.js` development).
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 /**
  * Forward a JSON POST to the FastAPI backend and relay its response

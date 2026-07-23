@@ -12,11 +12,9 @@ GET  /api/health        -> {"status": "ok"}
 
 from __future__ import annotations
 
-from pathlib import Path
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import Response
 
 from . import calculations
 from .models import (
@@ -25,10 +23,6 @@ from .models import (
     SWPRequest,
     SWPResponse,
 )
-
-# Static single-page frontend lives at <repo>/frontend/public. On Vercel the
-# whole project is bundled into the function, so this path resolves there too.
-FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend" / "public"
 
 app = FastAPI(
     title="SIP-SWP Planner API",
@@ -65,10 +59,10 @@ def simulate_swp(req: SWPRequest) -> SWPResponse:
     return SWPResponse(summary=summary, yearly=yearly)
 
 
-# Serve the static SPA (index.html, app.js, styles.css) from the same app so a
-# single Vercel function handles both the API and the frontend. Mounted last so
-# the explicit /api/* routes above take precedence; html=True serves index.html
-# at "/" and for directory requests. Guarded so an API-only local run (without
-# the frontend built) still starts cleanly.
-if FRONTEND_DIR.is_dir():
-    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+# The static SPA (index.html, app.js, styles.css) lives in the top-level
+# public/ directory and is served directly by Vercel's CDN — the FastAPI
+# function only handles the /api/* routes above. This handler just keeps
+# /favicon.ico (which falls through to the function) from logging a noisy 404.
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon() -> Response:
+    return Response(status_code=204)
