@@ -15,8 +15,8 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import calculations
-from models import (
+from . import calculations
+from .models import (
     SIPRequest,
     SIPResponse,
     SWPRequest,
